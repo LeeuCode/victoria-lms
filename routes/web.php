@@ -31,11 +31,13 @@ Route::prefix('admin')->group(function () {
 
     Route::get('subjects', [SubjectController::class, 'index'])->name('admin.subjects');
 
-    Route::get('questions', [QuestionController::class, 'index'])->name('admin.quiz');
+    Route::get('questions', [QuestionController::class, 'index'])->name('admin.questions');
 
-    Route::get('question/create', [QuestionController::class, 'create'])->name('admin.question.create');
+    Route::get('question/create/', [QuestionController::class, 'create'])->name('admin.question.create');
 
-    Route::get('question/edit/{id}', [QuestionController::class, 'edit'])->name('admin.question.edit');
+    Route::get('question/edit', [QuestionController::class, 'edit'])->name('admin.question.edit');
+
+    Route::get('question/view/{id}', [QuestionController::class, 'view'])->name('admin.question.view');
 
     Route::post('category/save', [CategoryController::class, 'store'])->name('admin.category.save');
 
@@ -67,3 +69,7 @@ Route::get('exam/id/{id}', [ExamController::class, 'index'])->name('exam');
 Route::post('exam/store', [ExamController::class, 'store'])->name('exam.store');
 
 Route::get('exam/destroy', [ExamController::class, 'destroyEaxm'])->name('exam.destroy');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

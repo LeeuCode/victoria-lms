@@ -86,7 +86,7 @@
                 </li>
 
                 <li class="menu-item">
-                    <a href="{{ route('admin.quiz') }}" class="menu-link">
+                    <a href="{{ route('admin.questions') }}" class="menu-link">
                         <div data-i18n="Without navbar">{{ __('Question') }}</div>
                     </a>
                 </li>

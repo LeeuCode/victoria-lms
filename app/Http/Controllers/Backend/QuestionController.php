@@ -10,10 +10,28 @@ use App\Models\Answer;
 
 class QuestionController extends Controller
 {
-    function index()
+    function index(Request $request)
     {
-        $questions = Question::paginate(15);
-        return view('backend.questions.index')->withQuestions($questions);
+        $subjects = Subject::all();
+        $questions = null;
+
+        if (isset($request->subject_id)) {
+            $questions = Question::where('subject_id', $request->subject_id)->get();
+        }
+
+        return view('backend.questions.index', [
+            'subjects' => $subjects,
+            'questions' => $questions
+        ]);
+    }
+
+    function view($id)
+    {
+        $questions = Question::where('subject_id', $id)->get();
+
+        return view('backend.questions.view', [
+            'question' => $questions,
+        ]);
     }
 
     function create()
@@ -51,9 +69,9 @@ class QuestionController extends Controller
         return redirect()->back();
     }
 
-    function edit($id)
+    function edit(Request $request)
     {
-        $question = Question::find($id);
+        $question = Question::find($request->question_id);
         $subjects = Subject::all();
 
         return view('backend.questions.edit', [

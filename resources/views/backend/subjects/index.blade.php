@@ -60,7 +60,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="badge bg-label-success">$230</span>
+                                    <span class="badge bg-label-success">${{ $subject->price }}</span>
                                 </td>
                                 <td>
                                     <div class="dropdown">

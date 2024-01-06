@@ -9,7 +9,7 @@
                     <h5 class="card-title text-primary">{{ __('Add New Question') }}</h5>
                     <div class="mb-3">
                         <label for="name" class="form-label">{{ __('Title') }}</label>
-                        <input type="text" class="form-control" name="name" id="name" />
+                        <textarea class="form-control" name="name" ></textarea>
                     </div>
 
                     <div class="mb-3">
