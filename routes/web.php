@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubjectController;
 use App\Http\Controllers\Backend\QuestionController;
+use App\Http\Controllers\Backend\ReceiptController;
+use App\Http\Controllers\Backend\ExamController as ExamBKController;
 use App\Http\Controllers\ExamController;
 
 /*
@@ -39,29 +41,27 @@ Route::prefix('admin')->group(function () {
 
     Route::get('question/view/{id}', [QuestionController::class, 'view'])->name('admin.question.view');
 
+    Route::get('/exam/booking', [ExamBKController::class, 'booking'])->name('admin.exam.booking');
+
+    Route::get('/exam/booking/student/{id}', [ExamBKController::class, 'bookingById'])->name('admin.exam.booking.student');
+
+    Route::get('/exam/exemptions', [ExamBKController::class, 'exemptions'])->name('admin.exam.exemptions');
+
+    Route::get('/exam/exemption/student/{id}', [ExamBKController::class, 'exemptionsById'])->name('admin.exam.exemption.student');
+
+    Route::get('receipt', [ReceiptController::class, 'index'])->name('admin.receipt.index');
+
+    Route::get('receipt/show/{id}', [ReceiptController::class, 'show'])->name('admin.receipt.show');
+
+    //====== Post Routes ======//
+
     Route::post('category/save', [CategoryController::class, 'store'])->name('admin.category.save');
 
     Route::post('subject/save', [SubjectController::class, 'store'])->name('admin.subject.save');
 
     Route::post('question/save', [QuestionController::class, 'store'])->name('admin.question.save');
 
-    // Route::post('question/save', [QuestionController::class, 'store'])->name('admin.question.save');
-
-    Route::get('/exam/booking', function () {
-        return view('backend.exam-booking.index');
-    })->name('admin.exam.booking');
-
-    Route::get('/exam/booking/student/{id}', function () {
-        return view('backend.exam-booking.student');
-    })->name('admin.exam.booking.student');
-
-    Route::get('/exam/exemptions', function () {
-        return view('backend.exemptions.index');
-    })->name('admin.exam.exemptions');
-
-    Route::get('/exam/exemption/student/{id}', function () {
-        return view('backend.exemptions.exams');
-    })->name('admin.exam.exemption.student');
+    Route::post('/exam/booking/save', [QuestionController::class, 'store'])->name('admin.exam.booking.save');
 });
 
 

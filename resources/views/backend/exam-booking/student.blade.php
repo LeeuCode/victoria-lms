@@ -3,24 +3,28 @@
 @section('content')
     <div class="col-lg-5">
         <div class="card">
-            <div class="card-body">
+            <form action="{{ route('admin.exam.booking') }}" method="GET" class="card-body">
+                {{-- @csrf --}}
+
                 <h5 class="card-title text-primary">{{ __('Choose Student') }}</h5>
                 <div class="mb-3">
                     <label for="cat_name" class="form-label">{{ __('Student') }}</label>
-                    <select name="" id="" class="form-select">
-                        <option value="">Mohamed Ahmed</option>
-                        <option value="">Ali Othman</option>
-                        <option value="">Hader Atef</option>
+                    <select name="student_select_id" id="student_select_id" class="form-select">
+                        <option value="">{{ __('Choose User') }}</option>
+
+                        @foreach ($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <p class="my-2 text-primary fw-bold">{{ __('Or') }}</p>
 
                 <div class="mb-3">
-                    <label for="price" class="form-label">{{ __('Student ID') }}</label>
-                    <input type="number" class="form-control" name="id" id="price" />
+                    <label for="student_id" class="form-label">{{ __('Student ID') }}</label>
+                    <input type="number" class="form-control" name="student_id" id="student_id" />
                 </div>
-                <a href="#" class="btn btn-primary">{{ __('Get Student') }}</a>
-            </div>
+                <button class="btn btn-primary">{{ __('Get Student') }}</button>
+            </form>
         </div>
     </div>
 
@@ -32,12 +36,12 @@
                     <div class="w-50">
                         <div class="d-flex justify-content-between">
                             <p class="fw-bold">{{ __('Student ID') }}:</p>
-                            <p class="badge bg-label-info">11085</p>
+                            <p class="badge bg-label-info">{{ $student->id }}</p>
                         </div>
 
                         <div class="d-flex justify-content-between">
                             <p class="fw-bold">{{ __('Name') }}:</p>
-                            <p class="badge bg-label-dark">Ahmed Mohamed Ali</p>
+                            <p class="badge bg-label-dark">{{ $student->name }}</p>
                         </div>
                     </div>
                     <div class="w-50">
@@ -56,27 +60,30 @@
         </div>
 
         <div class="card mb-3">
-            <div class="card-body">
+            <form action="{{ route('admin.exam.booking.save') }}" method="post" class="card-body">
+                @csrf
+
+                <input type="hidden" name="user_id" value="{{ $student->id }}">
                 <h5 class="card-title text-primary">{{ __('Choose Exam') }}</h5>
 
                 <div class="mb-3">
                     <label for="date" class="form-label">{{ __('Select Exam Date') }}</label>
-                    <input type="date" class="form-control" name="date" id="date" />
+                    <input type="date" class="form-control" name="date" id="exam_date" required />
                 </div>
 
                 <div class="mb-3">
-                    <label for="date" class="form-label">{{ __('Select Exam') }}</label>
-                    <select name="" id="" class="form-select">
+                    <label for="subject_id" class="form-label">{{ __('Select Exam') }}</label>
+                    <select name="subject_id" id="subject_id" class="form-select" required>
                         <option value="">Select an Exam</option>
-                        <option value="">1.1 Financial Accounting</option>
-                        <option value="">1.2 Management Accounting</option>
-                        <option value="">1.3 Business Maths And Quantitive Methods</option>
-                        <option value="">1.4 Economics</option>
+
+                        @foreach ($subjects as $subject)
+                            <option value="{{ $subject->title }}">{{ $subject->name }}</option>
+                        @endforeach
                     </select>
                 </div>
 
-                <a href="#" class="btn btn-dark">{{ __('Confirm The Exam Booking') }}</a>
-            </div>
+                <button class="btn btn-dark">{{ __('Confirm The Exam Booking') }}</button>
+            </form>
         </div>
     </div>
 @endsection
