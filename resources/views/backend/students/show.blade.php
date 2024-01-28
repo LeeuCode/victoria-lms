@@ -1,30 +1,13 @@
 @extends('backend.layout')
 
 @section('content')
-    <div class="col-12">
-        @if(session()->has('error'))
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                {{ session()->get('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                </button>
-            </div>
-        @endif
-
-        @if(session()->has('success'))
-            <div class="alert alert-success alert-dismissible" role="alert">
-                {{ session()->get('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                </button>
-            </div>
-        @endif
-    </div>
-    <div class="col-lg-5">
-        <div class="card">
-            <form action="{{ route('admin.exam.booking') }}" method="GET" class="card-body">
+    <div class="col-lg-12">
+        <div class="card mb-3">
+            <form action="{{ route('admin.exam.booking') }}" method="GET" class="card-body row align-items-center">
                 {{-- @csrf --}}
 
                 <h5 class="card-title text-primary">{{ __('Choose Student') }}</h5>
-                <div class="mb-3">
+                <div class="col-6">
                     <label for="cat_name" class="form-label">{{ __('Student') }}</label>
                     <select name="student_select_id" id="student_select_id" class="form-select">
                         <option value="">{{ __('Choose User') }}</option>
@@ -34,18 +17,20 @@
                         @endforeach
                     </select>
                 </div>
-                <p class="my-2 text-primary fw-bold">{{ __('Or') }}</p>
+                <p class="col-1 text-primary fw-bold m-0 text-center">{{ __('Or') }}</p>
 
-                <div class="mb-3">
+                <div class="col-5">
                     <label for="student_id" class="form-label">{{ __('Student ID') }}</label>
                     <input type="number" class="form-control" name="student_id" id="student_id" />
                 </div>
-                <button class="btn btn-primary">{{ __('Get Student') }}</button>
+                <div class="mt-3">
+                    <button class="btn btn-primary">{{ __('Get Student') }}</button>
+                </div>
             </form>
         </div>
     </div>
 
-    <div class="col-lg-7">
+    <div class="col-lg-6">
         <div class="card mb-3">
             <div class="card-body">
                 <h5 class="card-title text-primary">{{ __('Student Infromation') }}</h5>
@@ -73,34 +58,42 @@
                         </div>
                     </div>
                 </div>
+                <div class="w-100">
+                    <div class="d-flex justify-content-between">
+                        <p class="fw-bold me-3">{{ __('Email') }}:</p>
+                        <p class="badge bg-label-dark">{{ $student->email }}</p>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
 
+    <div class="col-lg-6">
         <div class="card mb-3">
-            <form action="{{ route('admin.exam.booking.save') }}" method="post" class="card-body">
-                @csrf
+            <div class="card-body">
+                <h5 class="card-title text-success">{{ __('Login Information') }}</h5>
+                <div class="d-flex- gap-3 justify-content-between-">
+                    <div class="w-50">
+                        <div class="d-flex justify-content-between">
+                            <p class="fw-bold">{{ __('Name') }}:</p>
+                            <p class="badge bg-label-dark">{{ $student->name }}</p>
+                        </div>
+                    </div>
+                    <div class="w-50">
+                        <div class="d-flex justify-content-between">
+                            <p class="fw-bold">{{ __('Email') }}:</p>
+                            <p class="badge bg-label-success">{{ $student->email }}</p>
+                        </div>
+                    </div>
 
-                <input type="hidden" name="user_id" value="{{ $student->id }}">
-                <h5 class="card-title text-primary">{{ __('Choose Exam') }}</h5>
-
-                <div class="mb-3">
-                    <label for="date" class="form-label">{{ __('Select Exam Date') }}</label>
-                    <input type="date" class="form-control" name="date" id="exam_date" required />
+                    <div class="w-50">
+                        <div class="d-flex justify-content-between">
+                            <p class="fw-bold">{{ __('Password') }}:</p>
+                            <a href="#" class="">{{ __('Reset Password') }}</a>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="mb-3">
-                    <label for="subject_id" class="form-label">{{ __('Select Exam') }}</label>
-                    <select name="subject_id" id="subject_id" class="form-select" required>
-                        <option value="">Select an Exam</option>
-
-                        @foreach ($subjects as $subject)
-                            <option value="{{ $subject->id }}">{{ $subject->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <button class="btn btn-dark">{{ __('Confirm The Exam Booking') }}</button>
-            </form>
+            </div>
         </div>
     </div>
 @endsection

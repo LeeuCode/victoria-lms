@@ -3,24 +3,28 @@
 @section('content')
     <div class="col-lg-6 mx-auto">
         <div class="card">
-            <div class="card-body">
+            <form action="{{ route('admin.exam.exemptions') }}" method="GET" class="card-body">
+                {{-- @csrf --}}
+
                 <h5 class="card-title text-primary">{{ __('Choose Student') }}</h5>
                 <div class="mb-3">
                     <label for="cat_name" class="form-label">{{ __('Student') }}</label>
-                    <select name="" id="" class="form-select">
-                        <option value="">Mohamed Ahmed</option>
-                        <option value="">Ali Othman</option>
-                        <option value="">Hader Atef</option>
+                    <select name="student_select_id" id="student_select_id" class="form-select">
+                        <option value="">{{ __('Choose User') }}</option>
+
+                        @foreach ($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <p class="my-2 text-primary fw-bold">{{ __('Or') }}</p>
 
                 <div class="mb-3">
-                    <label for="price" class="form-label">{{ __('Student ID') }}</label>
-                    <input type="number" class="form-control" name="id" id="price" />
+                    <label for="student_id" class="form-label">{{ __('Student ID') }}</label>
+                    <input type="number" class="form-control" name="student_id" id="student_id" />
                 </div>
-                <a href="#" class="btn btn-primary">{{ __('Get Student') }}</a>
-            </div>
+                <button class="btn btn-primary">{{ __('Get Student') }}</button>
+            </form>
         </div>
     </div>
 @endsection

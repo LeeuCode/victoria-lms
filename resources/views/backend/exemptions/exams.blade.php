@@ -70,45 +70,45 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>
-                                    <p class="m-0 small fw-bold">1.1 Financial Accounting</p>
-                                </td>
-                                <td>
-                                    <p class="badge bg-label-primary m-0">{{ __('Open') }}</p>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-primary">{{ __('Exemption') }}</button>
-                                </td>
-                            </tr>
+                            @foreach ($subjects as $key => $subject)
+                                <tr>
+                                    <th scope="row">{{ $key + 1 }}</th>
+                                    <td>
+                                        <p class="m-0 small fw-bold">{{ $subject->name }}</p>
+                                    </td>
+                                    <td>
 
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>
-                                    <p class="m-0 small fw-bold">1.2 Management Accounting</p>
-                                </td>
-                                <td>
-                                    <p class="badge bg-label-warning m-0">{{ __('In Progress') }}</p>
-                                </td>
-                                <td>
-                                    -
-                                    {{-- <button type="button" class="btn btn-sm btn-primary">{{ __('Exemption') }}</button> --}}
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>
-                                    <p class="m-0 small fw-bold">1.3 Business Maths And Quantitive Methods</p>
-                                </td>
-                                <td>
-                                    <p class="badge bg-label-danger m-0">{{ __('Exempt') }}</p>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-warning">{{ __('Undo') }}</button>
-                                </td>
-                            </tr>
+                                        @php
+                                            $examLast = $subject
+                                                ->exam()
+                                                ->where('user_id', $student->id)
+                                                ->orderBy('id', 'desc')
+                                                ->first();
+                                        @endphp
+                                        <p class="badge bg-label-primary m-0">
+                                            @if ($subject->exam->count() > 0)
+                                                {{ $examLast->status }}
+                                            @else
+                                                {{ __('Avalable') }}
+                                            @endif
+                                        </p>
+                                    </td>
+                                    <td>
+                                        @if ($subject->exam->count() > 0)
+                                            @if ($examLast->status == 'open')
+                                                <button type="button"
+                                                    class="btn btn-sm btn-primary">{{ __('Exemption') }}</button>
+                                            @else
+                                                no
+                                                {{-- <button type="button"
+                                                    class="btn btn-sm btn-primary">{{ __('Exemption') }}</button> --}}
+                                            @endif
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

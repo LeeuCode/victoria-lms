@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Receipt;
 use App\Models\User;
 
-class ReceiptController extends Controller
+class UserController extends Controller
 {
-    function index(Request $request)
+    function students(Request $request)
     {
         $users = User::where('type', 'student')->get();
 
@@ -22,25 +22,24 @@ class ReceiptController extends Controller
                 $id = $request->student_select_id;
             }
 
-            return redirect()->to(route('admin.receipt.show', ['id' => $id]));
+            return redirect()->to(route('admin.student.show', ['id' => $id]));
         }
 
-        return view('backend.receipts.index', [
+        return view('backend.students.index', [
             'users' => $users
         ]);
     }
 
-    function show($id) {
+    function showStudent($id)
+    {
         $users = User::where('type', 'student')->get();
-        // $subjects = Subject::all();
         $student = User::find($id);
 
-        // $resp = Receipt::
+        // dd(Crypt::decrypt($student->password));
 
-        return view('backend.receipts.show', [
-            "users" => $users,
-            // "subjects" => $subjects,
-            "student" => $student
+        return view('backend.students.show', [
+            'users' => $users,
+            'student' => $student
         ]);
     }
 }

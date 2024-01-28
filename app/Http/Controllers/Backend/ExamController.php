@@ -53,7 +53,7 @@ class ExamController extends Controller
 
         $exam->subject_id = $subject->id;
         $exam->user_id = $request->user_id;
-        $exam->exam_date = $request->exam_date;
+        $exam->exam_date = $request->date;
         $exam->exam_duration = $subject->duration;
         $exam->status = 'open';
 
@@ -71,16 +71,79 @@ class ExamController extends Controller
             $receipt->amount = $subject->price;
             $receipt->status = 'paid';
             $receipt->save();
+
+            return redirect()->back()->with('success', __('تم أضافةالصنف بنجاح !'));;
+        } else {
+            return redirect()->back()->with('error', __('You don\'t have sufficient balance to rebook this exam'));
         }
     }
 
-    function exemptions()
+    function exemptions(Request $request)
     {
-        return view('backend.exemptions.index');
+        $users = User::where('type', 'student')->get();
+
+        if ($request->student_id || $request->student_select_id) {
+            if (isset($request->student_id)) {
+                $id = $request->student_id;
+            }
+
+            if (isset($request->student_select_id)) {
+                $id = $request->student_select_id;
+            }
+
+            return redirect()->to(route('admin.exam.exemption.student', ['id' => $id]));
+        }
+
+        return view('backend.exemptions.index', [
+            'users' => $users,
+            // "student" => $student
+        ]);
     }
 
     function exemptionsById($id)
     {
-        return view('backend.exam-booking.student');
+        $users = User::where('type', 'student')->get();
+        $subjects = Subject::all();
+        $student = User::find($id);
+
+        return view('backend.exemptions.exams', [
+            'users' => $users,
+            'student' => $student,
+            'subjects'=> $subjects
+        ]);
+    }
+
+    function examResults(Request $request)
+    {
+        $users = User::where('type', 'student')->get();
+
+        if ($request->student_id || $request->student_select_id) {
+            if (isset($request->student_id)) {
+                $id = $request->student_id;
+            }
+
+            if (isset($request->student_select_id)) {
+                $id = $request->student_select_id;
+            }
+
+            return redirect()->to(route('admin.exam.results.student', ['id' => $id]));
+        }
+
+        return view('backend.results.index', [
+            'users' => $users
+        ]);
+    }
+
+    function examUserResult($id)
+    {
+        $users = User::where('type', 'student')->get();
+        $student = User::find($id);
+        $exams = Exam::where('user_id', $id)->get();
+
+        return view('backend.results.exams', [
+            'users' => $users,
+            'exams' => $exams,
+            "student" => $student
+        ]);
     }
 }

@@ -66,7 +66,7 @@
             </a>
         </li>
 
-        <!-- Layouts -->
+        <!-- LMS -->
         <li class="menu-item active open">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class='menu-icon tf-icons bx bxs-graduation'></i>
@@ -102,7 +102,20 @@
                         <div data-i18n="Without navbar">{{ __('Exams Exemptions') }}</div>
                     </a>
                 </li>
+
+                <li class="menu-item">
+                    <a href="{{ route('admin.exam.results') }}" class="menu-link">
+                        <div data-i18n="Without navbar">{{ __('Exams Results') }}</div>
+                    </a>
+                </li>
             </ul>
+        </li>
+
+        <li class="menu-item">
+            <a href="{{ route('admin.receipt.index') }}" class="menu-link">
+                <i class='menu-icon tf-icons bx bx-credit-card'></i>
+                <div data-i18n="Analytics">{{ __('Account') }}</div>
+            </a>
         </li>
 
         <li class="menu-item">
@@ -113,13 +126,13 @@
 
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="layouts-without-navbar.html" class="menu-link">
-                        <div data-i18n="Without navbar">Without navbar</div>
+                    <a href="{{ route('admin.students') }}" class="menu-link">
+                        <div data-i18n="Without navbar">{{ __('Pfofiles') }}</div>
                     </a>
                 </li>
                 <li class="menu-item">
                     <a href="layouts-container.html" class="menu-link">
-                        <div data-i18n="Container">Container</div>
+                        <div data-i18n="Container">{{ __('Registerations') }}</div>
                     </a>
                 </li>
             </ul>

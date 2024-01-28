@@ -57,7 +57,7 @@
                                     <span class="fw-bold">Answer</span>
                                     <div class="d-flex gap-2 align-items-center">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" data-name="is_correct" name="is_correct" type="checkbox" data-value="true" value="true" id="is_correct">
+                                            <input class="form-check-input" data-name="is_correct" name="is_correct" type="checkbox" >
                                             <label class="form-check-label"
                                                 for="is_correct">{{ __('Correct Answer') }}</label>
                                         </div>

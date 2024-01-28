@@ -3,7 +3,7 @@
 @section('content')
     <div class="col-lg-6 mx-auto">
         <div class="card">
-            <form action="{{ route('admin.receipt.index') }}" method="GET" class="card-body">
+            <form action="{{ route('admin.exam.results') }}" method="GET" class="card-body">
                 {{-- @csrf --}}
 
                 <h5 class="card-title text-primary">{{ __('Choose Student') }}</h5>

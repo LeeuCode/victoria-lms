@@ -42,7 +42,6 @@
                 <button class="btn btn-success">{{ __('Post the Receipt') }}</button>
             </form>
 
-
             <table class="table table-striped">
                 <thead class="bg-dark">
                     <tr>
@@ -128,29 +127,39 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    <tr>
-                        <td>
-                            <p class="small m-0">1</p>
-                        </td>
-                        <td>
-                            <p class="small m-0">#10</p>
-                        </td>
-                        <td>
-                            <p class="small m-0">22-12-2023</p>
-                        </td>
-                        <td>
-                            <p class="small m-0">Exam Fee Gross Value</p>
-                        </td>
-                        <td>
-                            <span class="badge bg-label-success">$350</span>
-                        </td>
-                        <td>
-                            <button class="btn btn-sm btn-success">Pay</button>
-                        </td>
-                        <td></td>
-                    </tr>
+                    @foreach ($student->receipt()->get() as $key => $receipt)
+                        <tr>
+                            <td>
+                                <p class="small m-0">{{ $key + 1 }}</p>
+                            </td>
+                            <td>
+                                <p class="small m-0">#{{ $receipt->id }}</p>
+                            </td>
+                            <td>
+                                <p class="small m-0">{{ date('d-m-Y', strtotime($receipt->created_at)) }}</p>
+                            </td>
+                            <td>
+                                <p class="small m-0">{{ $receipt->description }}</p>
+                            </td>
+                            <td>
+                                <span class="badge bg-label-success">${{ $receipt->amount }}</span>
+                            </td>
+                            <td>
+                                @if ($receipt->status == 'paid')
+                                    {{ __('Paid') }}
+                                @else
+                                    <button class="btn btn-sm btn-success">Pay</button>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($receipt->status == 'paid')
+                                    <button class="btn btn-sm btn-danger">Undo</button>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
 
-                    <tr>
+                    {{-- <tr>
                         <td>
                             <p class="small m-0">2</p>
                         </td>
@@ -172,7 +181,7 @@
                         <td>
                             <button class="btn btn-sm btn-danger">Undo</button>
                         </td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
         </div>

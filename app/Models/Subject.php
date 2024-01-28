@@ -21,6 +21,11 @@ class Subject extends Model
         return $this->hasMany('App\Models\Question');
     }
 
+    public function exam()
+    {
+        return $this->hasMany('App\Models\Exam');
+    }
+
     // public function question($id)
     // {
     //     return $this->hasMany('App\Models\Question')
